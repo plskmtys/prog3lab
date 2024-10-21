@@ -1,4 +1,4 @@
-package org.junit;
+package junitlab.bank;
 
 /**
  * Ez a kiv�tel jelzi, ha �rv�nytelen vagy nem l�tez� banksz�mlasz�mot

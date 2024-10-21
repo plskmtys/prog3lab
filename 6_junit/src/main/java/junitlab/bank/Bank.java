@@ -1,4 +1,4 @@
-package org.junit;
+package junitlab.bank;
 
 /**
  * Egy kezdetleges takar�ksz�vetkezet interf�sze.

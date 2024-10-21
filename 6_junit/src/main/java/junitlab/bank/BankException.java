@@ -1,4 +1,4 @@
-package org.junit;
+package junitlab.bank;
 
 /**
  * A bankkal kapcsolatos kiv�telek �soszt�lya.
