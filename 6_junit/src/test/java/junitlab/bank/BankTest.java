@@ -39,4 +39,22 @@ public class BankTest {
         Assertions.assertEquals(2000, gsb.getBalance(acc));
     }
 
+    @Test
+    public void testConstructorWithAccountNumber() {
+        String accountNumber = "123456789";
+        BankException exception = new BankException(accountNumber) {};
+
+        Assertions.assertEquals(accountNumber, exception.getAccountNumber());
+    }
+
+    @Test
+    public void testConstructorWithAccountNumberAndMessage() {
+        String accountNumber = "123456789";
+        String message = "Test error message";
+        BankException exception = new BankException(accountNumber, message) {};
+
+        Assertions.assertEquals(accountNumber, exception.getAccountNumber());
+        Assertions.assertEquals(message, exception.getMessage());
+    }
+
 }
