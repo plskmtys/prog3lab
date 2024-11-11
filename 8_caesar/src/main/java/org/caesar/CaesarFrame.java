@@ -17,9 +17,6 @@ import javax.swing.event.DocumentListener;
 
 public class CaesarFrame extends JFrame {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private JTextField up = new JTextField(20);
@@ -81,7 +78,7 @@ public class CaesarFrame extends JFrame {
 	
 			@Override
 			public void focusLost(FocusEvent focusEvent) {
-				// Do nothing
+				// semmi
 			}
 		};
 		up.addFocusListener(upFocus);
@@ -115,46 +112,56 @@ public class CaesarFrame extends JFrame {
 	        }
 	    }
 	}
-	/*class InputKeyListener extends KeyAdapter {
-		@Override
-		public void keyPressed(KeyEvent keyEvent) {
-			super.keyPressed(keyEvent);
-			down.setText(caesarCode(up.getText(), combo.getSelectedItem().toString()));
-		}
-	}*/
-	private  String caesarCode(String input, String offset) {
-		String code = "";
-		input = input.toUpperCase();
-		
-		String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		int shift = letters.indexOf(offset);
-		
-		for(int i = 0; i < input.length(); i++) {
-			char c = (char) (input.charAt(i) + shift);
-			if (c > 90) {
-				code += (char)(input.charAt(i) - (26 - shift));
-			}else {
-				code += (char)(input.charAt(i) + shift);
-			}
-		}
-		return code;
-	}
-	private String caesarDecode(String input, String offset) {
-		String code = "";
-		input = input.toUpperCase();
-		
-		String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		int shift = letters.indexOf(offset);
-		
-		for(int i = 0; i < input.length(); i++) {
-			char c = (char) (input.charAt(i) - shift);
-			if (c < 65) {
-				code += (char)(input.charAt(i) + (26 - shift));
-			}else {
-				code += (char)(input.charAt(i) - shift);
-			}
-		}
+	
+	private String caesarCode(String input, String offset) {
+	    StringBuilder code = new StringBuilder();
+	    String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    int shift = letters.indexOf(offset.toUpperCase());
 
-		return code;
+	    for (int i = 0; i < input.length(); i++) {
+	        char c = input.charAt(i);
+	        if (Character.isUpperCase(c)) {
+	            char encodedChar = (char) (c + shift);
+	            if (encodedChar > 'Z') {
+	                encodedChar -= 26;
+	            }
+	            code.append(encodedChar);
+	        } else if (Character.isLowerCase(c)) {
+	            char encodedChar = (char) (c + shift);
+	            if (encodedChar > 'z') {
+	                encodedChar -= 26;
+	            }
+	            code.append(encodedChar);
+	        } else {
+	            code.append(c);
+	        }
+	    }
+	    return code.toString();
+	}
+	
+	private String caesarDecode(String input, String offset) {
+	    StringBuilder code = new StringBuilder();
+	    String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    int shift = letters.indexOf(offset.toUpperCase());
+
+	    for (int i = 0; i < input.length(); i++) {
+	        char c = input.charAt(i);
+	        if (Character.isUpperCase(c)) {
+	            char decodedChar = (char) (c - shift);
+	            if (decodedChar < 'A') {
+	                decodedChar += 26;
+	            }
+	            code.append(decodedChar);
+	        } else if (Character.isLowerCase(c)) {
+	            char decodedChar = (char) (c - shift);
+	            if (decodedChar < 'a') {
+	                decodedChar += 26;
+	            }
+	            code.append(decodedChar);
+	        } else {
+	            code.append(c);
+	        }
+	    }
+	    return code.toString();
 	}
 }
