@@ -43,8 +43,6 @@ public class StudentFrame extends JFrame {
      */
     private void initComponents() {
         this.setLayout(new BorderLayout());
-
-
         JTable table = new JTable(data);
         JScrollPane scrollPane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
@@ -66,7 +64,6 @@ public class StudentFrame extends JFrame {
         table.setDefaultRenderer(String.class, new StudentTableCellRenderer(table.getDefaultRenderer(String.class)));
         table.setDefaultRenderer(Boolean.class, new StudentTableCellRenderer(table.getDefaultRenderer(Boolean.class)));
         table.setDefaultRenderer(Integer.class, new StudentTableCellRenderer(table.getDefaultRenderer(Integer.class)));
-        
     }
     final class AddButtonListener implements ActionListener {
 
@@ -88,9 +85,13 @@ public class StudentFrame extends JFrame {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
             Component component = renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-            if(((Integer)(data.getValueAt(table.getRowSorter().convertRowIndexToModel(row), 3)))< 2) {
+            int modelRow = table.getRowSorter().convertRowIndexToModel(row);
+            Boolean hasSignature = (Boolean) data.getValueAt(modelRow, 2);
+            Integer grade = (Integer) data.getValueAt(modelRow, 3);
+
+            if (!hasSignature || grade < 2) {
                 component.setBackground(RED);
-            }else{
+            } else {
                 component.setBackground(GREEN);
             }
 
@@ -108,7 +109,6 @@ public class StudentFrame extends JFrame {
         super("Hallgatói nyilvántartás");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        // Load data
         try {
             data = new StudentData();
             File dataFile = new File(DATA_FILE_PATH);
@@ -121,12 +121,10 @@ public class StudentFrame extends JFrame {
             ex.printStackTrace();
         }
         
-        // Save data
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 try {
-                    // Ensure parent directories exist
                     File dataFile = new File(DATA_FILE_PATH);
                     dataFile.getParentFile().mkdirs();
                     

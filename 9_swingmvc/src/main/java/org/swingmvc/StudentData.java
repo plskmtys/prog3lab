@@ -82,9 +82,9 @@ public class StudentData extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Student student = students.get(rowIndex);
-        if(columnIndex == 2){
+        if (columnIndex == 2) {
             student.setSignature((Boolean) aValue);
-        } else if(columnIndex == 3){
+        } else if (columnIndex == 3) {
             student.setGrade((Integer) aValue);
         }
         fireTableRowsUpdated(rowIndex, rowIndex);
